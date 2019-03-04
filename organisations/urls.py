@@ -1,12 +1,18 @@
 from django.urls import path
 from .views import (
-    OrganisationtListView,
+    OrganisationListView,
     OrganisationDetailView,
+    OrganisationCreateView,
+    OrganisationDeleteView,
+    OrganisationUpdateView,
 )
 from . import views
 
 urlpatterns = [
-    path('', OrganisationListView.as_view(), name='organisations'),
-    path('post/<int:pk>/', OrganisationDetailView.as_view(), name='organisation-detail'),
+    path('', OrganisationListView.as_view(), name='organisations-list'),
+    path('organisation/<int:pk>/', OrganisationDetailView.as_view(), name='organisation-detail'),
+    path('organisation/new/', OrganisationCreateView.as_view(), name='post-create'),
+    path('organisation/<int:pk>/update/', OrganisationUpdateView.as_view(), name='post-update'),
+    path('organisation/<int:pk>/delete/', OrganisationDeleteView.as_view(), name='post-delete'),
 
 ]

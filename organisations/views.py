@@ -4,7 +4,7 @@ from django.views.generic import (
     DetailView,
     CreateView,
     UpdateView,
-    DeleteView
+    DeleteView,
 )
 from .models import Organisation
 
@@ -16,7 +16,7 @@ def home(request):
     return render(request, 'organisations/temp.html', context)
 
 
-class OrganisationsListView(ListView):
+class OrganisationListView(ListView):
     model = Organisation
     template_name = 'organisations/organisations.html'
     context_object_name = 'organisations'
@@ -26,38 +26,38 @@ class OrganisationsListView(ListView):
 class OrganisationDetailView(DetailView):
     model = Organisation
 
-# uncomment when the user app is ready
-#
-# class OrganisationCreateView(CreateView):
-#     model = Organisation
-#     fields = ['organisation_name', 'content']
-#
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
-#
-#
-# class OrganisationUpdateView(UpdateView):
-#     model = Organisation
-#     fields = ['organisation_name', 'content']
-#
-#     def form_valid(self, form):
-#         form.instance.author = self.request.user
-#         return super().form_valid(form)
-#
-#     def test_func(self):
-#         post = self.get_object()
-#         if self.request.user == post.author:
-#             return True
-#         return False
-#
-#
-# class OrganisationDeleteView(DeleteView):
-#     model = Organisation
-#     success_url = '/'
-#
-#     def test_func(self):
-#         post = self.get_object()
-#         if self.request.user == post.author:
-#             return True
-#         return False
+
+class OrganisationCreateView(CreateView):
+    model = Organisation
+    fields = ['organisation_name', 'address_1', 'address_2',
+              'postcode', 'county', 'website', 'notes']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class OrganisationUpdateView(UpdateView):
+    model = Organisation
+    fields = ['organisation_name', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
+class OrganisationDeleteView(DeleteView):
+    model = Organisation
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False

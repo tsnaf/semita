@@ -1,15 +1,34 @@
-{% extends "blog/base.html" %}
+{% extends "organisations/base.html" %}
 {% block content %}
-  {% for organisation in organisations %}
-    <article class="media content-section">
-      <div class="media-body">
-        <div class="article-metadata">
-          <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-          <small class="text-muted">{{ post.date_posted|date:"F d Y" }}</small>
-        </div>
-        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-        <p class="article-content">{{ post.content }}</p>
-      </div>
-    </article>
-  {% endfor %}
+<article class="media jumbotron content-section">
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Organisation</th>
+        <th scope="col">Address</th>
+        <th scope="col">Address</th>
+        <th scope="col">Postcode</th>
+        <th scope="col">County</th>
+        <th scope="col">Type</th>
+        <th scope="col">Website</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for organisation in Organisations %}
+      <tr>
+        <th scope="row">1</th>
+        <td>{{ organisation.organisation_name }}</td>
+        <td>{{ organisation.address_1 }}</td>
+        <td>{{ organisation.address_2 }}</td>
+        <td>{{ organisation.postcode }}</td>
+        <td>{{ organisation.county }}</td>
+        <!-- <td>{{ organisation.type }}</td> -->
+        <td>{{ organisation.website }}</td>
+        <td>{{ organisation.notes }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</article>
 {% endblock content %}
