@@ -39,9 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dashboard.apps.DashboardConfig',
     'organisations.apps.OrganisationsConfig',
-    'grants.apps.GrantsConfig',
-    'contacts.apps.ContactsConfig',
-    'funds.apps.FundsConfig',
     'crispy_forms',
 ]
 

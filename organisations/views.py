@@ -6,9 +6,11 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Organisation
-from grants.models import Grant
-from contacts.models import Contact
+from .models import Organisation, Grant, Fund, Contact
+
+
+def home(request):
+    return render(request, 'organisations/home.html')
 
 
 class OrganisationListView(ListView):
@@ -28,3 +30,36 @@ class OrganisationDetailView(DetailView):
         context['grants'] = Grant.objects.all()
         context['contacts'] = Contact.objects.all()
         return context
+
+
+class GrantListView(ListView):
+    model = Grant
+    template_name = 'organisations/grants.html'
+    context_object_name = 'grants'
+    ordering = ['project_title']
+
+
+class GrantDetailView(DetailView):
+    model = Grant
+
+
+class FundListView(ListView):
+    model = Fund
+    template_name = 'organisations/funds.html'
+    context_object_name = 'funds'
+    ordering = ['title']
+
+
+class FundDetailView(DetailView):
+    model = Fund
+
+
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'organisations/contacts.html'
+    context_object_name = 'contacts'
+    ordering = ['first_name']
+
+
+class ContactDetailView(DetailView):
+    model = Contact
