@@ -1,7 +1,10 @@
 {% extends "organisations/base.html" %}
 {% block content %}
-<article class="media jumbotron content-section">
-  <table class="table table-striped">
+
+<div class="mt-5">
+  <br>
+  <h1 class="display-4">Organisations</h1>
+  <table class="table mt-5 table-striped">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Organisation</th>
@@ -12,23 +15,26 @@
         <th scope="col">Type</th>
         <th scope="col">Website</th>
         <th scope="col">Notes</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
-      {% for organisation in Organisations %}
-      <tr>
-        <th scope="row">1</th>
-        <td>{{ organisation.organisation_name }}</td>
-        <td>{{ organisation.address_1 }}</td>
-        <td>{{ organisation.address_2 }}</td>
-        <td>{{ organisation.postcode }}</td>
-        <td>{{ organisation.county }}</td>
-        <!-- <td>{{ organisation.type }}</td> -->
-        <td>{{ organisation.website }}</td>
-        <td>{{ organisation.notes }}</td>
-      </tr>
+      {% for organisation in organisations %}
+        <tr>
+          <td><a href="{% url 'organisation-detail' organisation.id %}">{{ organisation.organisation_name }}</a></td>
+          <td>{{ organisation.address_1 }}</td>
+          <td>{{ organisation.address_2 }}</td>
+          <td>{{ organisation.postcode }}</td>
+          <td>{{ organisation.county }}</td>
+          <td>{{ organisation.type }}</td>
+          <td>{{ organisation.website }}</td>
+          <td>{{ organisation.notes }}</td>
+          <td>Edit</td>
+          <td>Delete</td>
+        </tr>
       {% endfor %}
     </tbody>
   </table>
-</article>
+</div>
 {% endblock content %}
