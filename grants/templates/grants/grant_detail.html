@@ -1,0 +1,13 @@
+{% extends "organisations/base.html" %}
+{% block content %}
+  <div class="mt-5">
+    <br>
+    <h1 class="display-4">{{ object.project_title }}</h1>
+    <p>Organisation: <a href="{% url 'organisation-detail' object.organisation.id %}">{{ object.organisation.organisation_name }}</a></p>
+    <p>Fund: <a href="{% url 'fund-detail' object.fund.id %}">{{ object.fund.title }}</a></p>
+    <p>Award: £ {{ object.amount }}</p>
+    <p>Date Submitted: {{ object.date }}</p>
+    <p>Status: {{ object.status }}</p>
+    <p>Notes: {{ object.notes }}</p>
+  </div>
+{% endblock content %}
