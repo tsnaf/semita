@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+{% block content %}
+<div class="mt-5">
+  <br>
+  <h1 class="display-4">Funds</h1>
+  <table class="table mt-5 table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Total Amount (£)</th>
+        <th scope="col">Open Date</th>
+        <th scope="col">Close Date</th>
+        <th scope="col">Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fund in funds %}
+      <tr>
+        <td><a href="{% url 'fund-detail' fund.id %}">{{ fund.title }}</a></td>
+        <td>{{ fund.amount }}</td>
+        <td>{{ fund.open_date }}</td>
+        <td>{{ fund.close_date }}</td>
+        <td>{{ fund.type }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock content %}
