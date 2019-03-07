@@ -3,19 +3,19 @@ from django.urls import reverse
 
 
 class Organisation(models.Model):
-    TYPES = [
+    ORG_TYPES = [
         ('SMALL_BUSINESS', 'Small Business'),
         ('LARGE_BUSINESS', 'Large Business'),
         ('SOLETRADER', 'Soletrader'),
     ]
-    organisation_name = models.CharField(max_length=50)
-    address_1 = models.CharField(max_length=50)
-    address_2 = models.CharField(max_length=50)
-    postcode = models.CharField(max_length=10)
-    county = models.CharField(max_length=50)
-    type = models.CharField(max_length=50, choices=TYPES, default='SMALL_BUSINESS')
-    website = models.CharField(max_length=50)
-    notes = models.TextField()
+    organisation_name = models.CharField(max_length=50, null=True)
+    address_1 = models.CharField(max_length=50, blank=True)
+    address_2 = models.CharField(max_length=50, blank=True)
+    postcode = models.CharField(max_length=10, blank=True)
+    county = models.CharField(max_length=50, blank=True)
+    type = models.CharField(max_length=50, choices=ORG_TYPES, default='SMALL_BUSINESS', blank=True)
+    website = models.URLField(max_length=50, blank=True, null=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.organisation_name
@@ -25,17 +25,23 @@ class Organisation(models.Model):
 
 
 class Fund(models.Model):
-    TYPES = [
+    FUND_TYPES = [
         ('Strategic', 'Strategic'),
         ('Open', 'Open'),
         ('Investment', 'Investment'),
     ]
-    title = models.CharField(max_length=50)
-    amount = models.IntegerField()
-    open_date = models.DateField(auto_now_add=False)
-    close_date = models.DateField(auto_now_add=False)
-    type = models.CharField(max_length=50, choices=TYPES, default='Strategic')
-    notes = models.TextField()
+    STATUS_TYPES = [
+        ('Open', 'Open'),
+        ('Closed', 'Closed'),
+        ('Pending', 'Pending'),
+    ]
+    title = models.CharField(max_length=50, null=True)
+    amount = models.PositiveIntegerField(blank=True, null=True)
+    open_date = models.DateField(auto_now_add=False, blank=True, null=True)
+    close_date = models.DateField(auto_now_add=False, blank=True, null=True)
+    type = models.CharField(max_length=50, choices=FUND_TYPES, default='Strategic', blank=True)
+    status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
@@ -45,9 +51,8 @@ class Fund(models.Model):
 
 
 class Grant(models.Model):
-    TYPES = [
+    STATUS_TYPES = [
         ('APPLIED', 'Applied'),
-        ('PENDING', 'Pending'),
         ('ACCEPTED', 'Accepted'),
         ('DECLINED', 'Declined'),
         ('CONTRACTED', 'Contracted'),
@@ -55,11 +60,11 @@ class Grant(models.Model):
     ]
     organisation = models.ForeignKey(Organisation, blank=True, null=True, on_delete=models.CASCADE)
     fund = models.ForeignKey(Fund, blank=True, null=True, on_delete=models.CASCADE)
-    project_title = models.CharField(max_length=50)
-    amount = models.IntegerField()
-    date = models.DateField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=TYPES, default='Pending')
-    notes = models.TextField()
+    project_title = models.CharField(max_length=50, null=True)
+    amount = models.PositiveIntegerField(blank=True, null=True)
+    date = models.DateField(auto_now_add=True, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.project_title
@@ -70,13 +75,13 @@ class Grant(models.Model):
 
 class Contact(models.Model):
     organisation = models.ForeignKey(Organisation, blank=True, null=True, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    job_title = models.CharField(max_length=50)
-    email = models.EmailField()
-    phone = models.CharField(max_length=50)
-    updated = models.DateField(auto_now=True)
-    notes = models.TextField()
+    first_name = models.CharField(max_length=50, null=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    job_title = models.CharField(max_length=50, blank=True)
+    email = models.EmailField(blank=True, null=True)
+    phone = models.CharField(max_length=50, blank=True)
+    updated = models.DateField(auto_now=True, blank=True, null=True)
+    notes = models.TextField(blank=True)
 
     def __str__(self):
         return self.first_name

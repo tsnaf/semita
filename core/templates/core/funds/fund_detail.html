@@ -8,4 +8,29 @@
     <p>Closing Date: {{ fund.close_date }}</p>
     <p>Type: {{ fund.type }}</p>
   </div>
+  <div class="mt-5">
+      <h2 class="mb-4">Grants</h2>
+      <table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grants %}
+          <tr>
+            <td><a href="{% url 'grant-detail' grant.id %}">{{ grant.project_title }}</a></td>
+            <td>{{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td>{{ grant.status }}</td>
+            <td>{{ grant.notes }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
 {% endblock content %}
