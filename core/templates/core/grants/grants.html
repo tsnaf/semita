@@ -22,7 +22,7 @@
         <td><a href="{% url 'grant-detail' grant.id %}">{{ grant.project_title }}</a></td>
         <td>{{ grant.amount }}</td>
         <td>{{ grant.date }}</td>
-        <td>{{ grant.status }}</td>
+        <td class="{{ grant.status }}">{{ grant.status }}</td>
       </tr>
       {% endfor %}
     </tbody>

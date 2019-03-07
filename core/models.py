@@ -4,16 +4,16 @@ from django.urls import reverse
 
 class Organisation(models.Model):
     ORG_TYPES = [
-        ('SMALL_BUSINESS', 'Small Business'),
-        ('LARGE_BUSINESS', 'Large Business'),
-        ('SOLETRADER', 'Soletrader'),
+        ('Small Business', 'Small Business'),
+        ('Large Business', 'Large Business'),
+        ('Soletrader', 'Soletrader'),
     ]
     organisation_name = models.CharField(max_length=50, null=True)
     address_1 = models.CharField(max_length=50, blank=True)
     address_2 = models.CharField(max_length=50, blank=True)
     postcode = models.CharField(max_length=10, blank=True)
     county = models.CharField(max_length=50, blank=True)
-    type = models.CharField(max_length=50, choices=ORG_TYPES, default='SMALL_BUSINESS', blank=True)
+    type = models.CharField(max_length=50, choices=ORG_TYPES, default='Small Business', blank=True)
     website = models.URLField(max_length=50, blank=True, null=True)
     notes = models.TextField(blank=True)
 
