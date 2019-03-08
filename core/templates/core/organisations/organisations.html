@@ -4,6 +4,9 @@
 <div class="mt-5">
   <br>
   <h1 class="display-4">Organisations</h1>
+  <div class="mt-4">
+    <a class="btn btn-outline-primary" href="#">Add New</a>
+  </div>
   <table class="table mt-5 table-striped">
     <thead class="thead-dark">
       <tr>
@@ -27,9 +30,9 @@
           <td>{{ organisation.postcode }}</td>
           <td>{{ organisation.county }}</td>
           <td>{{ organisation.type }}</td>
-          <td>{{ organisation.website }}</td>
-          <td>Edit</td>
-          <td>Delete</td>
+          <td><a href="{{ organisation.website }}">{{ organisation.website }}</a></td>
+          <td><a href="#">Edit</a></td>
+          <td><a href="#">Delete</a></td>
         </tr>
       {% endfor %}
     </tbody>

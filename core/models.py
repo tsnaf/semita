@@ -49,14 +49,22 @@ class Fund(models.Model):
     def get_absolute_url(self):
         return reverse('fund-detail', kwargs={'pk': self.pk})
 
+    def class_status(self):
+        if self.status == 'Pending':
+            return 'alert-warning'
+        elif self.status == 'Open':
+            return 'alert-success'
+        elif self.status == 'Closed':
+            return 'alert-danger'
+
 
 class Grant(models.Model):
     STATUS_TYPES = [
-        ('APPLIED', 'Applied'),
-        ('ACCEPTED', 'Accepted'),
-        ('DECLINED', 'Declined'),
-        ('CONTRACTED', 'Contracted'),
-        ('COMPLETED', 'Completed'),
+        ('Applied', 'Applied'),
+        ('Accepted', 'Accepted'),
+        ('Declined', 'Declined'),
+        ('Contracted', 'Contracted'),
+        ('Completed', 'Completed'),
     ]
     organisation = models.ForeignKey(Organisation, blank=True, null=True, on_delete=models.CASCADE)
     fund = models.ForeignKey(Fund, blank=True, null=True, on_delete=models.CASCADE)
@@ -71,6 +79,18 @@ class Grant(models.Model):
 
     def get_absolute_url(self):
         return reverse('grant-detail', kwargs={'pk': self.pk})
+
+    def class_status(self):
+        if self.status == 'Applied':
+            return 'alert-warning'
+        elif self.status == 'Accepted':
+            return 'alert-success'
+        elif self.status == 'Declined':
+            return 'alert-danger'
+        elif self.status == 'Contracted':
+            return 'alert-info'
+        elif self.status == 'Completed':
+            return 'alert-primary'
 
 
 class Contact(models.Model):

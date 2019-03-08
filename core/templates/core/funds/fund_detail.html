@@ -7,27 +7,28 @@
     <p>Open Date: {{ fund.open_date }}</p>
     <p>Closing Date: {{ fund.close_date }}</p>
     <p>Type: {{ fund.type }}</p>
+    <p>Status: {{ fund.status }}</p>
   </div>
   <div class="mt-5">
-      <h2 class="mb-4">Grants</h2>
+      <h2 class="mb-4">Grants ({{grants|length}})</h2>
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
+            <th scope="col">Organisation</th>
             <th scope="col">Project Title</th>
             <th scope="col">Amount</th>
             <th scope="col">Date</th>
             <th scope="col">Status</th>
-            <th scope="col">Notes</th>
           </tr>
         </thead>
         <tbody>
           {% for grant in grants %}
           <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.id %}">{{ grant.organisation }}</a></td>
             <td><a href="{% url 'grant-detail' grant.id %}">{{ grant.project_title }}</a></td>
-            <td>{{ grant.amount }}</td>
+            <td>£ {{ grant.amount }}</td>
             <td>{{ grant.date }}</td>
-            <td>{{ grant.status }}</td>
-            <td>{{ grant.notes }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
           </tr>
           {% endfor %}
         </tbody>

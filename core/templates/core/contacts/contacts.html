@@ -3,6 +3,9 @@
 <div class="mt-5">
   <br>
   <h1 class="display-4">Contacts</h1>
+  <div class="mt-4">
+    <a class="btn btn-outline-primary" href="#">Add New</a>
+  </div>
   <table class="table mt-5 table-striped">
     <thead class="thead-dark">
       <tr>
@@ -13,6 +16,8 @@
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
         <th scope="col">Last Updated</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -25,6 +30,8 @@
         <td>{{ contact.email }}</td>
         <td>{{ contact.phone }}</td>
         <td>{{ contact.updated }}</td>
+        <td><a href="#">Edit</a></td>
+        <td><a href="#">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>

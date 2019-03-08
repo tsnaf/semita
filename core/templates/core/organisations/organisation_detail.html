@@ -2,40 +2,41 @@
 {% block content %}
   <div class="mt-5">
     <br>
-      <img src="https://logo.clearbit.com/{{ object.website }}" height="100px" class="rounded-circle">
       <h1 class="display-4">{{ object.organisation_name }}</h1>
+      <img src="https://logo.clearbit.com/{{ object.website }}" height="50px" class="rounded-circle">
+
       <p><a href="{{ object.website }}">{{ object.website }}</a></p>
       <p>{{ object.address_1 }}, {{ object.address_2 }}, {{ object.county }}, {{ object.postcode }} </p>
       <p>{{ object.type }}</p>
       <p>{{ object.notes }}</p>
   </div>
   <div class="mt-5">
-      <h2 class="mb-4">Grants</h2>
+      <h2 class="mb-4">Grants ({{grants|length}})</h2>
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Project Title</th>
+            <th scope="col">Fund</th>
             <th scope="col">Amount</th>
             <th scope="col">Date</th>
             <th scope="col">Status</th>
-            <th scope="col">Notes</th>
           </tr>
         </thead>
         <tbody>
           {% for grant in grants %}
           <tr>
             <td><a href="{% url 'grant-detail' grant.id %}">{{ grant.project_title }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.id %}">{{ grant.fund }}</a></td>
             <td>{{ grant.amount }}</td>
             <td>{{ grant.date }}</td>
-            <td>{{ grant.status }}</td>
-            <td>{{ grant.notes }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
   </div>
   <div class="mt-5">
-      <h2 class="mb-4">Contacts</h2>
+      <h2 class="mb-4">Contacts ({{contacts|length}})</h2>
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
@@ -45,7 +46,6 @@
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
             <th scope="col">Last Updated</th>
-            <th scope="col">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +57,6 @@
             <td>{{ contact.email }}</td>
             <td>{{ contact.phone }}</td>
             <td>{{ contact.updated }}</td>
-            <td>{{ contact.notes }}</td>
           </tr>
           {% endfor %}
         </tbody>
