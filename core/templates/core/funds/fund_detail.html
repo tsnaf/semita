@@ -28,8 +28,8 @@
         <tbody>
           {% for grant in grants %}
           <tr>
-            <td><a href="{% url 'organisation-detail' grant.organisation.id %}">{{ grant.organisation }}</a></td>
-            <td><a href="{% url 'grant-detail' grant.id %}">{{ grant.project_title }}</a></td>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
             <td>£ {{ grant.amount }}</td>
             <td>{{ grant.date }}</td>
             <td class="{{ grant.class_status }}">{{ grant.status }}</td>

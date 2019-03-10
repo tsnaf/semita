@@ -23,8 +23,8 @@
     <tbody>
       {% for contact in contacts %}
       <tr>
-        <td><a href="{% url 'organisation-detail' contact.organisation.id %}">{{ contact.organisation }}</a></td>
-        <td><a href="{% url 'contact-detail' contact.id %}">{{ contact.first_name }}</a></td>
+        <td><a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ contact.organisation }}</a></td>
+        <td><a href="{% url 'contact-detail' contact.slug contact.id %}">{{ contact.first_name }}</a></td>
         <td>{{ contact.last_name }}</td>
         <td>{{ contact.job_title }}</td>
         <td>{{ contact.email }}</td>

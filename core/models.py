@@ -17,7 +17,7 @@ class Organisation(models.Model):
     type = models.CharField(max_length=50, choices=ORG_TYPES, default='Small Business', blank=True)
     website = models.URLField(max_length=50, blank=True, null=True)
     notes = models.TextField(blank=True)
-    slug = models.SlugField(unique=True, default='')
+    slug = models.SlugField(default='organisation', editable=False)
 
     def __str__(self):
         return self.organisation_name
@@ -30,9 +30,6 @@ class Organisation(models.Model):
         value = self.organisation_name
         self.slug = slugify(value)
         super().save(*args, **kwargs)
-
-    # def get_absolute_url(self):
-    #     return reverse('organisation-detail', kwargs={'pk': self.pk})
 
 
 class Fund(models.Model):
@@ -53,12 +50,19 @@ class Fund(models.Model):
     type = models.CharField(max_length=50, choices=FUND_TYPES, default='Strategic', blank=True)
     status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
     notes = models.TextField(blank=True)
+    slug = models.SlugField(default='fund', editable=False)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('fund-detail', kwargs={'pk': self.pk})
+        kwargs = {'slug': self.slug, 'pk': self.pk}
+        return reverse('fund-detail', kwargs=kwargs)
+
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value)
+        super().save(*args, **kwargs)
 
     def class_status(self):
         if self.status == 'Pending':
@@ -84,12 +88,19 @@ class Grant(models.Model):
     date = models.DateField(auto_now_add=True, blank=True, null=True)
     status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
     notes = models.TextField(blank=True)
+    slug = models.SlugField(default='grant', editable=False)
 
     def __str__(self):
         return self.project_title
 
     def get_absolute_url(self):
-        return reverse('grant-detail', kwargs={'pk': self.pk})
+        kwargs = {'slug': self.slug, 'pk': self.pk}
+        return reverse('grant-detail', kwargs=kwargs)
+
+    def save(self, *args, **kwargs):
+        value = self.project_title
+        self.slug = slugify(value)
+        super().save(*args, **kwargs)
 
     def class_status(self):
         if self.status == 'Applied':
@@ -113,9 +124,16 @@ class Contact(models.Model):
     phone = models.CharField(max_length=50, blank=True)
     updated = models.DateField(auto_now=True, blank=True, null=True)
     notes = models.TextField(blank=True)
+    slug = models.SlugField(default='contact', editable=False)
 
     def __str__(self):
         return self.first_name
 
     def get_absolute_url(self):
-        return reverse('contact-detail', kwargs={'pk': self.pk})
+        kwargs = {'slug': self.slug, 'pk': self.pk}
+        return reverse('contact-detail', kwargs=kwargs)
+
+    def save(self, *args, **kwargs):
+        value = self.first_name
+        self.slug = slugify(value)
+        super().save(*args, **kwargs)

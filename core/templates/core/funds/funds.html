@@ -22,7 +22,7 @@
     <tbody>
       {% for fund in funds %}
       <tr>
-        <td><a href="{% url 'fund-detail' fund.id %}">{{ fund.title }}</a></td>
+        <td><a href="{% url 'fund-detail' fund.slug fund.id %}">{{ fund.title }}</a></td>
         <td>£ {{ fund.amount }}</td>
         <td>{{ fund.open_date }}</td>
         <td>{{ fund.close_date }}</td>

@@ -7,7 +7,7 @@
       <a class="btn btn-outline-primary" href="#">Edit</a>
       <a class="btn btn-outline-danger" href="#">Delete</a>
     </div>
-    <p>Organisation: <a href="{% url 'organisation-detail' contact.organisation.id %}">{{ object.organisation }}</a></p>
+    <p>Organisation: <a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ object.organisation }}</a></p>
     <p>Job Title: {{ object.job_title }}</p>
     <p>Email: <a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
     <p>Phone: {{ object.phone }}</p>
