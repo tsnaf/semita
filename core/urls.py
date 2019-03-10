@@ -14,7 +14,9 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('organisations/', OrganisationListView.as_view(), name='organisations'),
-    path('organisation/<int:pk>/', OrganisationDetailView.as_view(), name='organisation-detail'),
+    # path('organisation/<slug>/', OrganisationDetailView.as_view(), name='organisation-detail'),
+    path('organisation/<str:slug>-<int:pk>/',
+         OrganisationDetailView.as_view(), name='organisation-detail'),
     path('grants/', GrantListView.as_view(), name='grants'),
     path('grant/<int:pk>/', GrantDetailView.as_view(), name='grant-detail'),
     path('funds/', FundListView.as_view(), name='funds'),

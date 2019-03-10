@@ -24,15 +24,15 @@
     <tbody>
       {% for organisation in organisations %}
         <tr>
-          <td><a href="{% url 'organisation-detail' organisation.id %}">{{ organisation.organisation_name }}</a></td>
+          <td><a href="{% url 'organisation-detail' organisation.slug organisation.id %}">{{ organisation.organisation_name }}</a></td>
           <td>{{ organisation.address_1 }}</td>
           <td>{{ organisation.address_2 }}</td>
           <td>{{ organisation.postcode }}</td>
           <td>{{ organisation.county }}</td>
           <td>{{ organisation.type }}</td>
           <td><a href="{{ organisation.website }}">{{ organisation.website }}</a></td>
-          <td><a href="#">Edit</a></td>
-          <td><a href="#">Delete</a></td>
+          <td><a href="#"><i class="fas fa-edit"></i></a></td>
+          <td><a href="#"><i class="fas fa-trash"></i></a></td>
         </tr>
       {% endfor %}
     </tbody>

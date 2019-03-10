@@ -3,6 +3,10 @@
   <div class="mt-5">
     <br>
       <h1 class="display-4">{{ object.organisation_name }}</h1>
+      <div class="mt-4">
+        <a class="btn btn-outline-primary" href="#">Edit</a>
+        <a class="btn btn-outline-danger" href="#">Delete</a>
+      </div>
       <img src="https://logo.clearbit.com/{{ object.website }}" height="50px" class="rounded-circle">
 
       <p><a href="{{ object.website }}">{{ object.website }}</a></p>

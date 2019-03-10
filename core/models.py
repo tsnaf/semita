@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 
 class Organisation(models.Model):
@@ -16,12 +17,22 @@ class Organisation(models.Model):
     type = models.CharField(max_length=50, choices=ORG_TYPES, default='Small Business', blank=True)
     website = models.URLField(max_length=50, blank=True, null=True)
     notes = models.TextField(blank=True)
+    slug = models.SlugField(unique=True, default='')
 
     def __str__(self):
         return self.organisation_name
 
     def get_absolute_url(self):
-        return reverse('organisation-detail', kwargs={'pk': self.pk})
+        kwargs = {'slug': self.slug, 'pk': self.pk}
+        return reverse('organisation-detail', kwargs=kwargs)
+
+    def save(self, *args, **kwargs):
+        value = self.organisation_name
+        self.slug = slugify(value)
+        super().save(*args, **kwargs)
+
+    # def get_absolute_url(self):
+    #     return reverse('organisation-detail', kwargs={'pk': self.pk})
 
 
 class Fund(models.Model):
