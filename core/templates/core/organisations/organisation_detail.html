@@ -5,10 +5,10 @@
 {% block content %}
   <div class="mt-5">
     <br>
-      <h1 class="display-4">{{ object.organisation_name }}</h1>{{ object.title }}
-      <div class="mt-4">
-        <a class="btn btn-outline-primary" href="#">Edit</a>
-        <a class="btn btn-outline-danger" href="#">Delete</a>
+      <h1 class="display-4">{{ object.organisation_name }}</h1>
+      <div class="mt-4 mb-4">
+        <a class="btn btn-outline-primary" href="{% url 'organisation-update' object.slug object.id %}">Edit</a>
+        <a class="btn btn-outline-danger" href="{% url 'organisation-delete' object.slug object.id %}">Delete</a>
       </div>
       <img src="https://logo.clearbit.com/{{ object.website }}" height="50px" class="rounded-circle">
 
@@ -18,6 +18,7 @@
       <p>{{ object.notes }}</p>
   </div>
   <div class="mt-5">
+    {% if grants %}
       <h2 class="mb-4">Grants ({{grants|length}})</h2>
       <table class="table table-striped">
         <thead class="thead-dark">
@@ -30,43 +31,46 @@
           </tr>
         </thead>
         <tbody>
-          {% for grant in grants %}
-          <tr>
-            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
-            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
-            <td>{{ grant.amount }}</td>
-            <td>{{ grant.date }}</td>
-            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
-          </tr>
-          {% endfor %}
+            {% for grant in grants %}
+            <tr>
+              <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+              <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+              <td>{{ grant.amount }}</td>
+              <td>{{ grant.date }}</td>
+              <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
       </table>
+    {% endif %}
   </div>
   <div class="mt-5">
-      <h2 class="mb-4">Contacts ({{contacts|length}})</h2>
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Job Title</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Last Updated</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for contact in contacts %}
-          <tr>
-            <td><a href="{% url 'contact-detail' contact.slug contact.id %}">{{ contact.first_name }}</a></td>
-            <td>{{ contact.last_name }}</td>
-            <td>{{ contact.job_title }}</td>
-            <td>{{ contact.email }}</td>
-            <td>{{ contact.phone }}</td>
-            <td>{{ contact.updated }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
+    {% if contacts %}
+        <h2 class="mb-4">Contacts ({{contacts|length}})</h2>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for contact in contacts %}
+              <tr>
+                <td><a href="{% url 'contact-detail' contact.slug contact.id %}">{{ contact.first_name }}</a></td>
+                <td>{{ contact.last_name }}</td>
+                <td>{{ contact.job_title }}</td>
+                <td>{{ contact.email }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.updated }}</td>
+              </tr>
+              {% endfor %}
+          </tbody>
       </table>
+    {% endif %}
   </div>
 {% endblock content %}

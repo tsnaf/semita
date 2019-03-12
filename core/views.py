@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
     DetailView,
@@ -31,6 +32,26 @@ class OrganisationDetailView(DetailView):
         context['grants'] = Grant.objects.all()
         context['contacts'] = Contact.objects.all()
         return context
+
+
+class OrganisationCreateView(LoginRequiredMixin, CreateView):
+    model = Organisation
+    fields = ['organisation_name', 'address_1', 'address_2',
+              'postcode', 'county', 'type', 'website', 'notes']
+    template_name = 'core/organisations/organisation_form.html'
+
+
+class OrganisationUpdateView(LoginRequiredMixin, UpdateView):
+    model = Organisation
+    fields = ['organisation_name', 'address_1', 'address_2',
+              'postcode', 'county', 'type', 'website', 'notes']
+    template_name = 'core/organisations/organisation_form.html'
+
+
+class OrganisationDeleteView(LoginRequiredMixin, DeleteView):
+    model = Organisation
+    success_url = '/'
+    template_name = 'core/organisations/organisation_confirm_delete.html'
 
 
 class GrantListView(ListView):

@@ -9,7 +9,7 @@
   <br>
   <h1 class="display-4">Organisations</h1>
   <div class="mt-4">
-    <a class="btn btn-outline-primary" href="#">Add New</a>
+    <a class="btn btn-outline-primary" href="{% url 'organisation-create' %}">Add New</a>
   </div>
   <table class="table mt-5 table-striped">
     <thead class="thead-dark">
@@ -35,8 +35,8 @@
           <td>{{ organisation.county }}</td>
           <td>{{ organisation.type }}</td>
           <td><a href="{{ organisation.website }}">{{ organisation.website }}</a></td>
-          <td><a href="#"><i class="fas fa-edit"></i></a></td>
-          <td><a href="#"><i class="fas fa-trash"></i></a></td>
+          <td><a href="{% url 'organisation-update' organisation.slug organisation.id %}"><i class="fas fa-edit"></i></a></td>
+          <td><a href="{% url 'organisation-delete' organisation.slug organisation.id %}"><i class="fas fa-trash"></i></a></td>
         </tr>
       {% endfor %}
     </tbody>
