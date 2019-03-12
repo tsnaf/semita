@@ -7,8 +7,8 @@
     <br>
     <h1 class="display-4">{{ object.first_name }} {{ object.last_name }}</h1>
     <div class="mt-4 mb-4">
-      <a class="btn btn-outline-primary" href="#">Edit</a>
-      <a class="btn btn-outline-danger" href="#">Delete</a>
+      <a class="btn btn-outline-primary" href="{% url 'contact-update' object.slug object.id %}">Edit</a>
+      <a class="btn btn-outline-danger" href="{% url 'contact-delete' object.slug object.id %}">Delete</a>
     </div>
     <p>Organisation: <a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ object.organisation }}</a></p>
     <p>Job Title: {{ object.job_title }}</p>

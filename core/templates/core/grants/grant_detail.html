@@ -7,8 +7,8 @@
     <br>
     <h1 class="display-4">{{ object.project_title }}</h1>
     <div class="mt-4 mb-4">
-      <a class="btn btn-outline-primary" href="#">Edit</a>
-      <a class="btn btn-outline-danger" href="#">Delete</a>
+      <a class="btn btn-outline-primary" href="{% url 'grant-update' object.slug object.id %}">Edit</a>
+      <a class="btn btn-outline-danger" href="{% url 'grant-delete' object.slug object.id %}">Delete</a>
     </div>
     <p>Organisation: <a href="{% url 'organisation-detail' object.organisation.slug object.organisation.id %}">{{ object.organisation.organisation_name }}</a></p>
     <p>Fund: <a href="{% url 'fund-detail' object.fund.slug object.fund.id %}">{{ object.fund.title }}</a></p>
