@@ -7,7 +7,7 @@
   <br>
   <h1 class="display-4">Grants</h1>
   <div class="mt-4">
-    <a class="btn btn-outline-primary" href="#">Add New</a>
+    <a class="btn btn-outline-primary" href="{% url 'grant-create' %}">Add New</a>
   </div>
   <table class="table mt-5 table-striped">
     <thead class="thead-dark">
@@ -31,8 +31,8 @@
         <td>£ {{ grant.amount }}</td>
         <td>{{ grant.date }}</td>
         <td class="{{ grant.class_status }}">{{ grant.status }}</td>
-        <td><a href="#"><i class="fas fa-edit"></i></a></td>
-        <td><a href="#"><i class="fas fa-trash"></i></a></td>
+        <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a></td>
+        <td><a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
       </tr>
       {% endfor %}
     </tbody>

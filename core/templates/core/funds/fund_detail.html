@@ -6,9 +6,9 @@
   <div class="mt-5">
     <br>
     <h1 class="display-4">{{ fund.title }}</h1>
-    <div class="mt-4">
-      <a class="btn btn-outline-primary" href="#">Edit</a>
-      <a class="btn btn-outline-danger" href="#">Delete</a>
+    <div class="mt-4 mb-4">
+      <a class="btn btn-outline-primary" href="{% url 'fund-update' object.slug object.id %}">Edit</a>
+      <a class="btn btn-outline-danger" href="{% url 'fund-delete' object.slug object.id %}">Delete</a>
     </div>
     <p>Total Amount: £{{ fund.amount }}</p>
     <p>Open Date: {{ fund.open_date }}</p>

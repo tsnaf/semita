@@ -7,7 +7,7 @@
   <br>
   <h1 class="display-4">Funds</h1>
   <div class="mt-4">
-    <a class="btn btn-outline-primary" href="#">Add New</a>
+    <a class="btn btn-outline-primary" href="{% url 'fund-create' %}">Add New</a>
   </div>
   <table class="table mt-5 table-striped">
     <thead class="thead-dark">
@@ -31,8 +31,8 @@
         <td>{{ fund.close_date }}</td>
         <td>{{ fund.type }}</td>
         <td class="{{ fund.class_status }}">{{ fund.status }}</td>
-        <td><a href="#"><i class="fas fa-edit"></i></a></td>
-        <td><a href="#"><i class="fas fa-trash"></i></a></td>
+        <td><a href="{% url 'fund-update' fund.slug fund.id %}"><i class="fas fa-edit"></i></a></td>
+        <td><a href="{% url 'fund-delete' fund.slug fund.id %}"><i class="fas fa-trash"></i></a></td>
       </tr>
       {% endfor %}
     </tbody>

@@ -3,17 +3,16 @@
 {% block content %}
   <div class="mt-5">
     <br>
-      <h1 class="display-4">{{ object.organisation_name }}</h1>
+      <h1 class="display-4">{{ object.title }}</h1>
   </div>
   <div class="mt-5">
     <form class="" method="post">
       {% csrf_token %}
       <fieldset class="form-group">
-        <!-- <legend class="border-bottom mb-4">New Organisation</legend> -->
         {{ form|crispy }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info" type="submit" name="button">Create</button>
+        <button class="btn btn-outline-info" type="submit" name="button">Save</button>
       </div>
     </form>
   </div>
