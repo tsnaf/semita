@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-            {% for grant in grants %}
+            {% for grant in grants  %}
             <tr>
               <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
               <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>

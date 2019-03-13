@@ -1,12 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-)
+from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
+from django.views.generic.list import MultipleObjectMixin
 from .models import Organisation, Grant, Fund, Contact
 
 
@@ -27,10 +22,11 @@ class OrganisationDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
+        context = super(OrganisationDetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet for all objects
-        context['grants'] = Grant.objects.all()
-        context['contacts'] = Contact.objects.all()
+        context['contacts'] = Contact.objects.filter(organisation_id=self.kwargs['pk'])
+        context['grants'] = Grant.objects.filter(
+            organisation_id=self.kwargs['pk'])
         return context
 
 
@@ -101,7 +97,7 @@ class FundDetailView(DetailView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet for all objects
-        context['grants'] = Grant.objects.all()
+        context['grants'] = Grant.objects.filter(fund_id=self.kwargs['pk'])
         return context
 
 

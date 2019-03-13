@@ -81,8 +81,10 @@ class Grant(models.Model):
         ('Contracted', 'Contracted'),
         ('Completed', 'Completed'),
     ]
-    organisation = models.ForeignKey(Organisation, blank=True, null=True, on_delete=models.CASCADE)
-    fund = models.ForeignKey(Fund, blank=True, null=True, on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation, blank=True,
+                                     null=True, related_name='grantorgslist', on_delete=models.CASCADE)
+    fund = models.ForeignKey(Fund, blank=True, null=True,
+                             related_name='grantfundslist', on_delete=models.CASCADE)
     project_title = models.CharField(max_length=50, null=True)
     amount = models.PositiveIntegerField(blank=True, null=True)
     date = models.DateField(auto_now_add=True, blank=True, null=True)
@@ -116,7 +118,8 @@ class Grant(models.Model):
 
 
 class Contact(models.Model):
-    organisation = models.ForeignKey(Organisation, blank=True, null=True, on_delete=models.CASCADE)
+    organisation = models.ForeignKey(Organisation, blank=True,
+                                     null=True, related_name='contactorgslist', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, blank=True)
     job_title = models.CharField(max_length=50, blank=True)
