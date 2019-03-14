@@ -1,13 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-)
+from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
 from .models import Organisation, Grant, Fund, Contact
+from .forms import attachmentuploadform
 
 
 def home(request):
@@ -27,10 +22,11 @@ class OrganisationDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
+        context = super(OrganisationDetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet for all objects
-        context['grants'] = Grant.objects.all()
-        context['contacts'] = Contact.objects.all()
+        context['contacts'] = Contact.objects.filter(organisation_id=self.kwargs['pk'])
+        context['grants'] = Grant.objects.filter(
+            organisation_id=self.kwargs['pk'])
         return context
 
 
@@ -58,7 +54,7 @@ class GrantListView(ListView):
     model = Grant
     template_name = 'core/grants/grants.html'
     context_object_name = 'grants'
-    ordering = ['project_title']
+    ordering = ['date']
 
 
 class GrantDetailView(DetailView):
@@ -69,15 +65,32 @@ class GrantDetailView(DetailView):
 class GrantCreateView(LoginRequiredMixin, CreateView):
     model = Grant
     fields = ['organisation', 'fund', 'project_title',
-              'amount', 'status', 'notes']
+              'amount', 'status', 'attachment', 'notes']
     template_name = 'core/grants/grant_form.html'
+
+    def file_upload(request):
+        save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', request.FILES['file'])
+        path = default_storage.save(save_path, request.FILES['file'])
+        return default_storage.path(path)
 
 
 class GrantUpdateView(LoginRequiredMixin, UpdateView):
     model = Grant
     fields = ['organisation', 'fund', 'project_title',
-              'amount', 'status', 'notes']
+              'amount', 'status', 'attachment', 'notes']
     template_name = 'core/grants/grant_form.html'
+
+    def attachmentupload(request):
+        if request.method == 'POST':
+            form = attachmentuploadform(request.POST, request.FILES)
+            if form.is_valid():
+                form.save()
+                return redirect('home')
+        else:
+            form = attachmentuploadform()
+        return render(request, 'core/grants/grant_form.html', {
+            'form': form
+        })
 
 
 class GrantDeleteView(LoginRequiredMixin, DeleteView):
@@ -90,7 +103,7 @@ class FundListView(ListView):
     model = Fund
     template_name = 'core/funds/funds.html'
     context_object_name = 'funds'
-    ordering = ['title']
+    ordering = ['open_date']
 
 
 class FundDetailView(DetailView):
@@ -101,7 +114,7 @@ class FundDetailView(DetailView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet for all objects
-        context['grants'] = Grant.objects.all()
+        context['grants'] = Grant.objects.filter(fund_id=self.kwargs['pk'])
         return context
 
 
@@ -129,7 +142,7 @@ class ContactListView(ListView):
     model = Contact
     template_name = 'core/contacts/contacts.html'
     context_object_name = 'contacts'
-    ordering = ['first_name']
+    ordering = ['organisation']
 
 
 class ContactDetailView(DetailView):
