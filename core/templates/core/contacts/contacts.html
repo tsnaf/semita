@@ -6,33 +6,60 @@
   <div class="mt-4">
     <a class="btn btn-outline-primary" href="{% url 'contact-create' %}">Add New</a>
   </div>
-  <table class="table mt-5 table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Organisation</th>
-        <th scope="col">Name</th>
-        <th scope="col">Job Title</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Last Updated</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for contact in contacts %}
-      <tr>
-        <td><a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ contact.organisation }}</a></td>
-        <td><a href="{% url 'contact-detail' contact.slug contact.id %}">{{ contact.first_name }} {{ contact.last_name }}</a></td>
-        <td>{{ contact.job_title }}</td>
-        <td>{{ contact.email }}</td>
-        <td>{{ contact.phone }}</td>
-        <td>{{ contact.updated }}</td>
-        <td><a href="{% url 'contact-update' contact.slug contact.id %}"><i class="fas fa-edit"></i></a></td>
-        <td><a href="{% url 'contact-delete' contact.slug contact.id %}"><i class="fas fa-trash"></i></a></td>
-      </tr>
+  {% if contacts %}
+    <table class="table mt-5 table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Organisation</th>
+          <th scope="col">Name</th>
+          <th scope="col">Job Title</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Last Updated</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts %}
+        <tr>
+          <td><a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ contact.organisation }}</a></td>
+          <td><a href="{% url 'contact-detail' contact.slug contact.id %}">{{ contact.first_name }} {{ contact.last_name }}</a></td>
+          <td>{{ contact.job_title }}</td>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>{{ contact.updated }}</td>
+          <td><a href="{% url 'contact-update' contact.slug contact.id %}"><i class="fas fa-edit"></i></a></td>
+          <td><a href="{% url 'contact-delete' contact.slug contact.id %}"><i class="fas fa-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-secondary mb-4" href="?page=1">First</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+          <a class="btn btn-outline-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
       {% endfor %}
-    </tbody>
-  </table>
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+
+  {% else %}
+    <div class="mt-5">
+      <h4>No Contacts Found</h4>
+    </div>
+  {% endif %}
 </div>
 {% endblock content %}

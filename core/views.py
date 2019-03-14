@@ -14,6 +14,7 @@ class OrganisationListView(ListView):
     template_name = 'core/organisations/organisations.html'
     context_object_name = 'organisations'
     ordering = ['organisation_name']
+    paginate_by = 20
 
 
 class OrganisationDetailView(DetailView):
@@ -55,6 +56,7 @@ class GrantListView(ListView):
     template_name = 'core/grants/grants.html'
     context_object_name = 'grants'
     ordering = ['date']
+    paginate_by = 20
 
 
 class GrantDetailView(DetailView):
@@ -104,6 +106,7 @@ class FundListView(ListView):
     template_name = 'core/funds/funds.html'
     context_object_name = 'funds'
     ordering = ['open_date']
+    paginate_by = 20
 
 
 class FundDetailView(DetailView):
@@ -143,6 +146,7 @@ class ContactListView(ListView):
     template_name = 'core/contacts/contacts.html'
     context_object_name = 'contacts'
     ordering = ['organisation']
+    paginate_by = 20
 
 
 class ContactDetailView(DetailView):
