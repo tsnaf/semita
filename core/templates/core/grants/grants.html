@@ -9,33 +9,59 @@
   <div class="mt-4">
     <a class="btn btn-outline-primary" href="{% url 'grant-create' %}">Add New</a>
   </div>
-  <table class="table mt-5 table-striped">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Organisation</th>
-        <th scope="col">Fund</th>
-        <th scope="col">Project Title</th>
-        <th scope="col">Amount (£)</th>
-        <th scope="col">Date</th>
-        <th scope="col">Status</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for grant in grants %}
-      <tr>
-        <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
-        <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
-        <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
-        <td>£ {{ grant.amount }}</td>
-        <td>{{ grant.date }}</td>
-        <td class="{{ grant.class_status }}">{{ grant.status }}</td>
-        <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a></td>
-        <td><a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
-      </tr>
+  {% if grants %}
+    <table class="table mt-5 table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Organisation</th>
+          <th scope="col">Fund</th>
+          <th scope="col">Project Title</th>
+          <th scope="col">Amount (£)</th>
+          <th scope="col">Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for grant in grants %}
+        <tr>
+          <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+          <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+          <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+          <td>£ {{ grant.amount }}</td>
+          <td>{{ grant.date }}</td>
+          <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+          <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a></td>
+          <td><a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if is_paginated %}
+
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-secondary mb-4" href="?page=1">First</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+          <a class="btn btn-outline-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
       {% endfor %}
-    </tbody>
-  </table>
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+  {% else %}
+    <div class="mt-5">
+      <h4>No Grants Found</h4>
+    </div>
+  {% endif %}
 </div>
 {% endblock content %}

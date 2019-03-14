@@ -17,29 +17,31 @@
     <p>Status: {{ fund.status }}</p>
     <p>{{ fund.notes }}
   </div>
-  <div class="mt-5">
-      <h2 class="mb-4">Grants ({{grants|length}})</h2>
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Project Title</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Date</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for grant in grants %}
-          <tr>
-            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
-            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
-            <td>£ {{ grant.amount }}</td>
-            <td>{{ grant.date }}</td>
-            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-  </div>
+  {% if grants %}
+    <div class="mt-5">
+        <h2 class="mb-4">Grants ({{grants|length}})</h2>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Organisation</th>
+              <th scope="col">Project Title</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for grant in grants %}
+            <tr>
+              <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+              <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+              <td>£ {{ grant.amount }}</td>
+              <td>{{ grant.date }}</td>
+              <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  {% endif %}
 {% endblock content %}
