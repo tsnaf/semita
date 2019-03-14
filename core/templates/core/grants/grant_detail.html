@@ -15,6 +15,9 @@
     <p>Award: £ {{ object.amount }}</p>
     <p>Date Submitted: {{ object.date }}</p>
     <p>Status: {{ object.status }}</p>
+    {% if object.attachment %}
+      <p>Attachments: <a href="/{{ object.attachment.file }}">{{ object.attachment.name }}</a></p>
+    {% endif %}
     <p>Notes: {{ object.notes }}</p>
   </div>
 {% endblock content %}

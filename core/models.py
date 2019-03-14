@@ -81,9 +81,9 @@ class Grant(models.Model):
         ('Contracted', 'Contracted'),
         ('Completed', 'Completed'),
     ]
-    organisation = models.ForeignKey(Organisation, blank=True,
-                                     null=True, related_name='grantorgslist', on_delete=models.CASCADE)
-    fund = models.ForeignKey(Fund, blank=True, null=True,
+    organisation = models.ForeignKey(
+        Organisation, null=True, related_name='grantorgslist', on_delete=models.CASCADE)
+    fund = models.ForeignKey(Fund, null=True,
                              related_name='grantfundslist', on_delete=models.CASCADE)
     project_title = models.CharField(max_length=50, null=True)
     amount = models.PositiveIntegerField(blank=True, null=True)
@@ -91,6 +91,7 @@ class Grant(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
     notes = models.TextField(blank=True)
     slug = models.SlugField(default='grant', editable=False)
+    attachment = models.FileField(upload_to='grants/', blank=True)
 
     def __str__(self):
         return self.project_title
@@ -103,6 +104,10 @@ class Grant(models.Model):
         value = self.project_title
         self.slug = slugify(value)
         super().save(*args, **kwargs)
+
+    # class attachmentupload(models.Model):
+    #     """ attachment """
+    #     attachment = models.FileField(upload_to='grants/', blank=True, null=True)
 
     def class_status(self):
         if self.status == 'Applied':
@@ -118,8 +123,8 @@ class Grant(models.Model):
 
 
 class Contact(models.Model):
-    organisation = models.ForeignKey(Organisation, blank=True,
-                                     null=True, related_name='contactorgslist', on_delete=models.CASCADE)
+    organisation = models.ForeignKey(
+        Organisation, null=True, related_name='contactorgslist', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, blank=True)
     job_title = models.CharField(max_length=50, blank=True)
