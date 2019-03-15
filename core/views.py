@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Sum
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
-from .models import Organisation, Grant, Fund, Contact
+from .models import Organisation, Grant, Fund, Contact, Dashboard
 from .forms import attachmentuploadform
 
 
@@ -118,6 +119,8 @@ class FundDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet for all objects
         context['grants'] = Grant.objects.filter(fund_id=self.kwargs['pk'])
+        context['grants_active'] = Grant.objects.filter(fund_id=self.kwargs['pk']).filter(
+            status__in=['Accepted', 'Contracted', 'Completed']).aggregate(Sum('amount'))
         return context
 
 
@@ -172,3 +175,18 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
     model = Contact
     success_url = '/'
     template_name = 'core/contacts/contact_confirm_delete.html'
+
+
+class DashboardView(ListView):
+    model = Dashboard
+    context_object_name = 'dashboard'
+    template_name = 'core/home.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet for all objects
+        context['grants_applied'] = Grant.objects.filter(status='Applied')
+        context['grants_completed'] = Grant.objects.filter(status='Completed')
+        context['funds_open'] = Fund.objects.filter(status='Open')
+        return context

@@ -20,11 +20,12 @@ from .views import (
     ContactCreateView,
     ContactUpdateView,
     ContactDeleteView,
+    DashboardView,
 )
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', DashboardView.as_view(), name='home'),
     path('organisations/', OrganisationListView.as_view(), name='organisations'),
     path('organisation/<str:slug>-<int:pk>/',
          OrganisationDetailView.as_view(), name='organisation-detail'),

@@ -11,6 +11,7 @@
       <a class="btn btn-outline-danger" href="{% url 'fund-delete' object.slug object.id %}">Delete</a>
     </div>
     <p>Total Amount: £{{ fund.amount }}</p>
+    <p>Total Allocated: £ {{ grants_active }}</p>
     <p>Open Date: {{ fund.open_date }}</p>
     <p>Closing Date: {{ fund.close_date }}</p>
     <p>Type: {{ fund.type }}</p>
