@@ -56,8 +56,24 @@ class GrantListView(ListView):
     model = Grant
     template_name = 'core/grants/grants.html'
     context_object_name = 'grants'
-    ordering = ['date']
+    ordering = ['-date']
     paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet for all objects
+        context['grantsapplied'] = Grant.objects.filter(
+            status='Applied')
+        context['grantsaccepted'] = Grant.objects.filter(
+            status='Accepted')
+        context['grantscontracted'] = Grant.objects.filter(
+            status='Contracted')
+        context['grantscompleted'] = Grant.objects.filter(
+            status='Completed')
+        context['grantsdeclined'] = Grant.objects.filter(
+            status='Declined')
+        return context
 
 
 class GrantDetailView(DetailView):
@@ -106,7 +122,7 @@ class FundListView(ListView):
     model = Fund
     template_name = 'core/funds/funds.html'
     context_object_name = 'funds'
-    ordering = ['open_date']
+    ordering = ['-open_date']
     paginate_by = 20
 
 
@@ -178,8 +194,8 @@ class ContactDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class DashboardView(ListView):
-    model = Dashboard
-    context_object_name = 'dashboard'
+    model = Fund
+    context_object_name = 'funds'
     template_name = 'core/home.html'
 
     def get_context_data(self, **kwargs):

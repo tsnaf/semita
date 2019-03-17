@@ -12,8 +12,8 @@
     <a class="btn btn-outline-primary" href="{% url 'organisation-create' %}">Add New</a>
   </div>
   {% if organisations %}
-    <table class="table mt-5 table-striped">
-      <thead class="thead-dark">
+    <table class="table mt-5 table-hover">
+      <thead class="thead">
         <tr>
           <th scope="col">Organisation</th>
           <th scope="col">Address</th>
@@ -23,7 +23,6 @@
           <th scope="col">Type</th>
           <th scope="col">Website</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -35,9 +34,9 @@
             <td>{{ organisation.postcode }}</td>
             <td>{{ organisation.county }}</td>
             <td>{{ organisation.type }}</td>
-            <td><a href="{{ organisation.website }}">{{ organisation.website }}</a></td>
-            <td><a href="{% url 'organisation-update' organisation.slug organisation.id %}"><i class="fas fa-edit"></i></a></td>
-            <td><a href="{% url 'organisation-delete' organisation.slug organisation.id %}"><i class="fas fa-trash"></i></a></td>
+            <td><a href="{{ organisation.website }}" target="_blank">{{ organisation.website }}</a></td>
+            <td><a href="{% url 'organisation-update' organisation.slug organisation.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'organisation-delete' organisation.slug organisation.id %}"><i class="fas fa-trash"></i></a></td>
           </tr>
         {% endfor %}
       </tbody>

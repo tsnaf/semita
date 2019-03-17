@@ -10,8 +10,8 @@
     <a class="btn btn-outline-primary" href="{% url 'fund-create' %}">Add New</a>
   </div>
   {% if funds %}
-    <table class="table mt-5 table-striped">
-      <thead class="thead-dark">
+    <table class="table mt-5 table-hover">
+      <thead class="thead">
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Total Amount (£)</th>
@@ -20,7 +20,6 @@
           <th scope="col">Type</th>
           <th scope="col">Status</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -32,8 +31,8 @@
           <td>{{ fund.close_date }}</td>
           <td>{{ fund.type }}</td>
           <td class="{{ fund.class_status }}">{{ fund.status }}</td>
-          <td><a href="{% url 'fund-update' fund.slug fund.id %}"><i class="fas fa-edit"></i></a></td>
-          <td><a href="{% url 'fund-delete' fund.slug fund.id %}"><i class="fas fa-trash"></i></a></td>
+          <td><a href="{% url 'fund-update' fund.slug fund.id %}"><i class="fas fa-edit"></i></a>
+          <a href="{% url 'fund-delete' fund.slug fund.id %}"><i class="fas fa-trash"></i></a></td>
         </tr>
         {% endfor %}
       </tbody>

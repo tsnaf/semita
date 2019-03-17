@@ -1,4 +1,7 @@
 {% extends "core/base.html" %}
+{% block title %}
+  Contacts
+{% endblock title %}
 {% block content %}
 <div class="mt-5">
   <br>
@@ -7,8 +10,8 @@
     <a class="btn btn-outline-primary" href="{% url 'contact-create' %}">Add New</a>
   </div>
   {% if contacts %}
-    <table class="table mt-5 table-striped">
-      <thead class="thead-dark">
+    <table class="table mt-5 table-hover">
+      <thead class="thead">
         <tr>
           <th scope="col">Organisation</th>
           <th scope="col">Name</th>
@@ -17,7 +20,6 @@
           <th scope="col">Phone</th>
           <th scope="col">Last Updated</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -29,8 +31,8 @@
           <td>{{ contact.email }}</td>
           <td>{{ contact.phone }}</td>
           <td>{{ contact.updated }}</td>
-          <td><a href="{% url 'contact-update' contact.slug contact.id %}"><i class="fas fa-edit"></i></a></td>
-          <td><a href="{% url 'contact-delete' contact.slug contact.id %}"><i class="fas fa-trash"></i></a></td>
+          <td><a href="{% url 'contact-update' contact.slug contact.id %}"><i class="fas fa-edit"></i></a>
+          <a href="{% url 'contact-delete' contact.slug contact.id %}"><i class="fas fa-trash"></i></a></td>
         </tr>
         {% endfor %}
       </tbody>

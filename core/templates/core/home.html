@@ -4,80 +4,55 @@
 {% endblock title %}
 {% block content %}
 <div class="mt-5">
-  <br>
-  <h1 class="display-4">Dashboard</h1>
-  <div class="card-deck mt-5">
-    <div class="card bg-info" style="width: 18rem;">
-      <div class="card-body">
-        <h5>Applications</h5>
-        <p class="card-text">{{ grants_applied|length }}</p>
-      </div>
-    </div>
-    <a class="card bg-secondary" style="width: 18rem;" href="#">
-      <div class="card-body">
-        <h5>Completed Projects</h5>
-        <p class="card-text">{{ grants_completed|length }}</p>
-      </div>
-    </a>
-    <div class="card bg-primary" style="width: 18rem;">
-      <div class="card-body">
-        <h5>Funds Open</h5>
-        <p class="card-text">{{ funds_open|length }}</p>
-      </div>
-    </div>
-  </div>
-<div class="card-deck mt-5">
-  <div class="card">
-    <div class="card-body">
-      <h4>Recent Applications</h4>
+    <br>
+    <h1 class="display-4">Dashboard</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm mt-5">
+          <h4 class="mb-3">Recent Applications</h4>
+          {% for grant in grants_applied  %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5><a class="card-title" href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></h5>
+              <h6 class="card-subtitle mb-3"><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></h6>
+              <p class="card-text">
+              Total amount: £ {{ grant.amount }}
+              </p>
+              <p class="card-text">
+              Fund: <a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a>
+              </p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="col-sm mt-5">
+          <h4 class="mb-3">Open Funds</h4>
 
-      <table class="table mt-3 table-striped">
-        <thead class="thead">
-          <tr>
-            <th scope="col">Organisation</th>
-            <th scope="col">Project Title</th>
-            <th scope="col">Fund</th>
-            <th scope="col">Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-            {% for grant in grants_applied  %}
-            <tr>
-              <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
-              <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
-              <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
-              <td>£ {{ grant.amount }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <h4>Open Funds</h4>
-
-      <table class="table mt-3 table-striped">
-        <thead class="thead">
-          <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Total Amount (£)</th>
-            <th scope="col">Close Date</th>
-          </tr>
-        </thead>
-        <tbody>
             {% for fund in funds_open  %}
-            <tr>
-              <td><a href="{% url 'fund-detail' fund.slug fund.id %}">{{ fund.title }}</a></td>
-              <td>£ {{ fund.amount }}</td>
-              <td>{{ fund.close_date }}</td>
-            </tr>
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5><a class="card-title "href="{% url 'fund-detail' fund.slug fund.id %}">{{ fund.title }}</a></h5>
+                <h5 class="card-subtitle mb-3">{{ fund.type }}</h5>
+                <p class="card-text">
+                Total amount: £ {{ fund.amount }}
+                </p>
+                <p class="card-text">
+                Allocated: £ {{ funds.amount__sum }}
+                </p>
+
+                <progress style="width: 100%" value="{{ grants_active.amount__sum }}" max="{{ fund.amount }}"></progress>
+
+                <p class="card-text">
+                Closing date: {{ fund.close_date }}
+                </p>
+              </div>
+            </div>
             {% endfor %}
-        </tbody>
-      </table>
+
+
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
 </div>
 
