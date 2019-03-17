@@ -4,8 +4,56 @@
 {% endblock title %}
 {% block content %}
 <div class="mt-5">
-  <br>
-  <h1 class="display-4">Dashboard</h1>
+    <br>
+    <h1 class="display-4">Dashboard</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm mt-5">
+          <h4 class="mb-3">Recent Applications</h4>
+          {% for grant in grants_applied  %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5><a class="card-title" href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></h5>
+              <h6 class="card-subtitle mb-3"><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></h6>
+              <p class="card-text">
+              Total amount: £ {{ grant.amount }}
+              </p>
+              <p class="card-text">
+              Fund: <a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a>
+              </p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="col-sm mt-5">
+          <h4 class="mb-3">Open Funds</h4>
+
+            {% for fund in funds_open  %}
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5><a class="card-title "href="{% url 'fund-detail' fund.slug fund.id %}">{{ fund.title }}</a></h5>
+                <h5 class="card-subtitle mb-3">{{ fund.type }}</h5>
+                <p class="card-text">
+                Total amount: £ {{ fund.amount }}
+                </p>
+                <p class="card-text">
+                Allocated: £ {{ funds.amount__sum }}
+                </p>
+
+                <progress style="width: 100%" value="{{ grants_active.amount__sum }}" max="{{ fund.amount }}"></progress>
+
+                <p class="card-text">
+                Closing date: {{ fund.close_date }}
+                </p>
+              </div>
+            </div>
+            {% endfor %}
+
+
+        </div>
+      </div>
+    </div>
+
 </div>
 
 {% endblock content %}

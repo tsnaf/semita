@@ -91,7 +91,7 @@ class Grant(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
     notes = models.TextField(blank=True)
     slug = models.SlugField(default='grant', editable=False)
-    attachment = models.FileField(upload_to='grants/', blank=True)
+    attachment = models.FileField(upload_to='grants/', blank=True, null=True)
 
     def __str__(self):
         return self.project_title
@@ -145,3 +145,7 @@ class Contact(models.Model):
         value = self.first_name
         self.slug = slugify(value)
         super().save(*args, **kwargs)
+
+
+class Dashboard(models.Model):
+    dash = models.CharField(max_length=50, null=True)

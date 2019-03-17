@@ -9,59 +9,225 @@
   <div class="mt-4">
     <a class="btn btn-outline-primary" href="{% url 'grant-create' %}">Add New</a>
   </div>
-  {% if grants %}
-    <table class="table mt-5 table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Organisation</th>
-          <th scope="col">Fund</th>
-          <th scope="col">Project Title</th>
-          <th scope="col">Amount (£)</th>
-          <th scope="col">Date</th>
-          <th scope="col">Status</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for grant in grants %}
-        <tr>
-          <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
-          <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
-          <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
-          <td>£ {{ grant.amount }}</td>
-          <td>{{ grant.date }}</td>
-          <td class="{{ grant.class_status }}">{{ grant.status }}</td>
-          <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a></td>
-          <td><a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
 
-    {% if is_paginated %}
-
-      {% if page_obj.has_previous %}
-        <a class="btn btn-outline-secondary mb-4" href="?page=1">First</a>
-      {% endif %}
-
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
-          <a class="btn btn-outline-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
-
-      {% if page_obj.has_next %}
-        <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-      {% endif %}
-
-    {% endif %}
-  {% else %}
-    <div class="mt-5">
-      <h4>No Grants Found</h4>
+  <nav class="mt-5">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-controls="nav-all" aria-selected="false">All ({{ grants|length }})</a>
+      <a class="nav-item nav-link" id="nav-applications-tab" data-toggle="tab" href="#nav-applications" role="tab" aria-controls="nav-applications" aria-selected="false">Applied ({{ grantsapplied|length }})</a>
+      <a class="nav-item nav-link" id="nav-accepted-tab" data-toggle="tab" href="#nav-accepted" role="tab" aria-controls="nav-accepted" aria-selected="false">Accepted ({{ grantsaccepted|length }})</a>
+      <a class="nav-item nav-link" id="nav-contracted-tab" data-toggle="tab" href="#nav-contracted" role="tab" aria-controls="nav-contracted" aria-selected="false">Contracted ({{ grantscontracted|length }})</a>
+      <a class="nav-item nav-link" id="nav-completed-tab" data-toggle="tab" href="#nav-completed" role="tab" aria-controls="nav-completed" aria-selected="false">Completed ({{ grantscompleted|length }})</a>
+      <a class="nav-item nav-link" id="nav-declined-tab" data-toggle="tab" href="#nav-declined" role="tab" aria-controls="nav-declined" aria-selected="false">Declined ({{ grantsdeclined|length }})</a>
     </div>
-  {% endif %}
-</div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all">
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grants %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+        {% if is_paginated %}
+
+          {% if page_obj.has_previous %}
+            <a class="btn btn-outline-secondary mb-4" href="?page=1">First</a>
+          {% endif %}
+
+          {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+              <a class="btn btn-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+              <a class="btn btn-outline-secondary mb-4" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if page_obj.has_next %}
+            <a class="btn btn-outline-secondary mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+          {% endif %}
+
+        {% endif %}
+
+      </div>
+
+    <div class="tab-pane" id="nav-applications" role="tabpanel" aria-labelledby="nav-applications">
+
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grantsapplied %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+    <div class="tab-pane" id="nav-accepted" role="tabpanel" aria-labelledby="nav-accepted">
+
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grantsaccepted %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="tab-pane" id="nav-contracted" role="tabpanel" aria-labelledby="nav-contracted">
+
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grantscontracted %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="tab-pane" id="nav-completed" role="tabpanel" aria-labelledby="nav-completed">
+
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grantscompleted %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="tab-pane" id="nav-declined" role="tabpanel" aria-labelledby="nav-declined">
+
+      <table class="table mt-5 table-hover">
+        <thead class="thead">
+          <tr>
+            <th scope="col">Organisation</th>
+            <th scope="col">Fund</th>
+            <th scope="col">Project Title</th>
+            <th scope="col">Amount (£)</th>
+            <th scope="col">Date</th>
+            <th scope="col">Status</th>
+            <th scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for grant in grantsdeclined %}
+          <tr>
+            <td><a href="{% url 'organisation-detail' grant.organisation.slug grant.organisation.id %}">{{ grant.organisation }}</a></td>
+            <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
+            <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
+            <td>£ {{ grant.amount }}</td>
+            <td>{{ grant.date }}</td>
+            <td class="{{ grant.class_status }}">{{ grant.status }}</td>
+            <td><a href="{% url 'grant-update' grant.slug grant.id %}"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'grant-delete' grant.slug grant.id %}"><i class="fas fa-trash"></i></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+    </div>
+
 {% endblock content %}

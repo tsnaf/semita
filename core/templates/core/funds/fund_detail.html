@@ -11,6 +11,8 @@
       <a class="btn btn-outline-danger" href="{% url 'fund-delete' object.slug object.id %}">Delete</a>
     </div>
     <p>Total Amount: £{{ fund.amount }}</p>
+    <p>Total Allocated: £ {{ grants_active.amount__sum }}</p>
+      <progress style="width: 25%" value="{{ grants_active.amount__sum }}" max="{{ fund.amount }}"></progress>
     <p>Open Date: {{ fund.open_date }}</p>
     <p>Closing Date: {{ fund.close_date }}</p>
     <p>Type: {{ fund.type }}</p>
@@ -20,8 +22,8 @@
   {% if grants %}
     <div class="mt-5">
         <h2 class="mb-4">Grants ({{grants|length}})</h2>
-        <table class="table table-striped">
-          <thead class="thead-dark">
+        <table class="table table-hover">
+          <thead class="thead">
             <tr>
               <th scope="col">Organisation</th>
               <th scope="col">Project Title</th>
