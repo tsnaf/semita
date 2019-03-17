@@ -10,11 +10,11 @@
       <a class="btn btn-outline-primary" href="{% url 'contact-update' object.slug object.id %}">Edit</a>
       <a class="btn btn-outline-danger" href="{% url 'contact-delete' object.slug object.id %}">Delete</a>
     </div>
-    <p>Organisation: <a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ object.organisation }}</a></p>
-    <p>Job Title: {{ object.job_title }}</p>
-    <p>Email: <a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
-    <p>Phone: {{ object.phone }}</p>
-    <p>Last Updated: {{ object.updated }}</p>
-    <p>Notes: {{ object.notes }}</p>
+    <p><strong>Organisation: </strong><a href="{% url 'organisation-detail' contact.organisation.slug contact.organisation.id %}">{{ object.organisation }}</a></p>
+    <p><strong>Job Title: </strong>{{ object.job_title }}</p>
+    <p><strong>Email: </strong><a href="mailto:{{ object.email }}">{{ object.email }}</a></p>
+    <p><strong>Phone: </strong>{{ object.phone }}</p>
+    <p><strong>Last Updated: </strong>{{ object.updated }}</p>
+    <p>{{ object.notes }}</p>
   </div>
 {% endblock content %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
+from datetime import datetime
 
 
 class Organisation(models.Model):
@@ -38,17 +39,11 @@ class Fund(models.Model):
         ('Open', 'Open'),
         ('Investment', 'Investment'),
     ]
-    STATUS_TYPES = [
-        ('Open', 'Open'),
-        ('Closed', 'Closed'),
-        ('Pending', 'Pending'),
-    ]
     title = models.CharField(max_length=50, null=True)
     amount = models.PositiveIntegerField(blank=True, null=True)
     open_date = models.DateField(auto_now_add=False, blank=True, null=True)
     close_date = models.DateField(auto_now_add=False, blank=True, null=True)
     type = models.CharField(max_length=50, choices=FUND_TYPES, default='Strategic', blank=True)
-    status = models.CharField(max_length=50, choices=STATUS_TYPES, default='Pending', blank=True)
     notes = models.TextField(blank=True)
     slug = models.SlugField(default='fund', editable=False)
 
@@ -64,13 +59,15 @@ class Fund(models.Model):
         self.slug = slugify(value)
         super().save(*args, **kwargs)
 
-    def class_status(self):
-        if self.status == 'Pending':
-            return 'alert-warning'
-        elif self.status == 'Open':
-            return 'alert-success'
-        elif self.status == 'Closed':
-            return 'alert-danger'
+    def fund_status(self):
+        todaysdate = datetime.now().date()
+        if self.open_date <= todaysdate:
+            if self.close_date >= todaysdate:
+                return {'fund_status': 'Open', 'class_status': 'alert-success'}
+            elif self.close_date <= todaysdate:
+                return {'fund_status': 'Closed', 'class_status': 'alert-danger'}
+        else:
+            return {'fund_status': 'Pending', 'class_status': 'alert-warning'}
 
 
 class Grant(models.Model):

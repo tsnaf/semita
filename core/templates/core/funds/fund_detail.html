@@ -10,13 +10,13 @@
       <a class="btn btn-outline-primary" href="{% url 'fund-update' object.slug object.id %}">Edit</a>
       <a class="btn btn-outline-danger" href="{% url 'fund-delete' object.slug object.id %}">Delete</a>
     </div>
-    <p>Total Amount: £{{ fund.amount }}</p>
-    <p>Total Allocated: £ {{ grants_active.amount__sum }}</p>
+    <p><strong>Total Amount: </strong>£ {{ fund.amount }}</p>
+    <p><strong>Total Allocated: </strong>£ {{ grants_active.amount__sum }}</p>
       <progress style="width: 25%" value="{{ grants_active.amount__sum }}" max="{{ fund.amount }}"></progress>
-    <p>Open Date: {{ fund.open_date }}</p>
-    <p>Closing Date: {{ fund.close_date }}</p>
-    <p>Type: {{ fund.type }}</p>
-    <p>Status: {{ fund.status }}</p>
+    <p><strong>Open Date: </strong>{{ fund.open_date }}</p>
+    <p><strong>Closing Date: </strong>{{ fund.close_date }}</p>
+    <p><strong>Type: </strong>{{ fund.type }}</p>
+    <p><strong>Status: </strong>{{ fund.fund_status }}</p>
     <p>{{ fund.notes }}
   </div>
   {% if grants %}

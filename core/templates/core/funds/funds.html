@@ -30,7 +30,7 @@
           <td>{{ fund.open_date }}</td>
           <td>{{ fund.close_date }}</td>
           <td>{{ fund.type }}</td>
-          <td class="{{ fund.class_status }}">{{ fund.status }}</td>
+          <td class="{{ fund.fund_status.class_status }}">{{ fund.fund_status.fund_status }}</td>
           <td><a href="{% url 'fund-update' fund.slug fund.id %}"><i class="fas fa-edit"></i></a>
           <a href="{% url 'fund-delete' fund.slug fund.id %}"><i class="fas fa-trash"></i></a></td>
         </tr>
