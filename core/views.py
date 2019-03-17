@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.views.generic import (ListView, DetailView, CreateView, UpdateView, DeleteView)
 from .models import Organisation, Grant, Fund, Contact, Dashboard
 from .forms import attachmentuploadform
+from datetime import datetime
 
 
 def home(request):
@@ -201,8 +202,10 @@ class DashboardView(ListView):
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+        todaysdate = datetime.now().date()
         # Add in a QuerySet for all objects
         context['grants_applied'] = Grant.objects.filter(status='Applied')
         context['grants_completed'] = Grant.objects.filter(status='Completed')
-        context['funds_open'] = Fund.objects.filter(status='Open')
+        context['funds_open'] = Fund.objects.filter(
+            close_date__gte=todaysdate).filter(open_date__lte=todaysdate)
         return context

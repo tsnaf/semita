@@ -41,8 +41,8 @@ class Fund(models.Model):
     ]
     title = models.CharField(max_length=50, null=True)
     amount = models.PositiveIntegerField(blank=True, null=True)
-    open_date = models.DateField(auto_now_add=False, blank=True, null=True)
-    close_date = models.DateField(auto_now_add=False, blank=True, null=True)
+    open_date = models.DateField(auto_now_add=False, null=True)
+    close_date = models.DateField(auto_now_add=False, null=True)
     type = models.CharField(max_length=50, choices=FUND_TYPES, default='Strategic', blank=True)
     notes = models.TextField(blank=True)
     slug = models.SlugField(default='fund', editable=False)
