@@ -29,6 +29,7 @@
           <h4 class="mb-3">Open Funds</h4>
 
             {% for fund in funds_open  %}
+              {% if fund.fund_status.fund_status %}
             <div class="card mb-3">
               <div class="card-body">
                 <h5><a class="card-title "href="{% url 'fund-detail' fund.slug fund.id %}">{{ fund.title }}</a></h5>
@@ -47,6 +48,7 @@
                 </p>
               </div>
             </div>
+            {% endif %}
             {% endfor %}
 
 
