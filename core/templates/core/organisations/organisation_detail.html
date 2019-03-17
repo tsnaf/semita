@@ -5,12 +5,17 @@
 {% block content %}
   <div class="mt-5">
     <br>
-      <h1 class="display-4">{{ object.organisation_name }}</h1>
+    <div class="container">
+      <ul class="list-inline">
+        <li class="list-inline-item" style="vertical-align: text-bottom;"><img src="https://logo.clearbit.com/{{ object.website }}" height="50px" class="rounded-circle"></li>
+        <li class="list-inline-item"><h1 class="display-4">{{ object.organisation_name }}</h1></li>
+      </ul>
+    </div>
+
       <div class="mt-4 mb-4">
         <a class="btn btn-outline-primary" href="{% url 'organisation-update' object.slug object.id %}">Edit</a>
         <a class="btn btn-outline-danger" href="{% url 'organisation-delete' object.slug object.id %}">Delete</a>
       </div>
-      <img src="https://logo.clearbit.com/{{ object.website }}" height="50px" class="rounded-circle">
 
       <p><a href="{{ object.website }}" target="_blank">{{ object.website }}</a></p>
       <p>{{ object.address_1 }}, {{ object.address_2 }}, {{ object.county }}, {{ object.postcode }} </p>
@@ -35,7 +40,7 @@
             <tr>
               <td><a href="{% url 'grant-detail' grant.slug grant.id %}">{{ grant.project_title }}</a></td>
               <td><a href="{% url 'fund-detail' grant.fund.slug grant.fund.id %}">{{ grant.fund }}</a></td>
-              <td>{{ grant.amount }}</td>
+              <td>£ {{ grant.amount }}</td>
               <td>{{ grant.date }}</td>
               <td class="{{ grant.class_status }}">{{ grant.status }}</td>
             </tr>

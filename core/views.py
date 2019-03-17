@@ -122,7 +122,7 @@ class FundListView(ListView):
     model = Fund
     template_name = 'core/funds/funds.html'
     context_object_name = 'funds'
-    ordering = ['-open_date']
+    ordering = ['-close_date']
     paginate_by = 20
 
 
@@ -143,14 +143,14 @@ class FundDetailView(DetailView):
 class FundCreateView(LoginRequiredMixin, CreateView):
     model = Fund
     fields = ['title', 'amount', 'open_date',
-              'close_date', 'type', 'status', 'notes']
+              'close_date', 'type', 'notes']
     template_name = 'core/funds/fund_form.html'
 
 
 class FundUpdateView(LoginRequiredMixin, UpdateView):
     model = Fund
     fields = ['title', 'amount', 'open_date',
-              'close_date', 'type', 'status', 'notes']
+              'close_date', 'type', 'notes']
     template_name = 'core/funds/fund_form.html'
 
 
