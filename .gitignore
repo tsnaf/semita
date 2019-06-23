@@ -3,6 +3,7 @@
 *.sqlite*
 *.pyc
 *local_settings.*
+*.vscode
 /env/
 /static/
 /media/
