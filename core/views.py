@@ -35,22 +35,20 @@ class OrganisationDetailView(DetailView):
 
 class OrganisationCreateView(LoginRequiredMixin, CreateView):
     model = Organisation
-    fields = ['organisation_name', 'address_1', 'address_2',
-              'postcode', 'county', 'type', 'website', 'notes']
+    fields = '__all__'
     template_name = 'core/organisations/organisation_form.html'
 
 
 class OrganisationUpdateView(LoginRequiredMixin, UpdateView):
     model = Organisation
-    fields = ['organisation_name', 'address_1', 'address_2',
-              'postcode', 'county', 'type', 'website', 'notes']
-    template_name = 'core/organisations/organisation_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
 
 class OrganisationDeleteView(LoginRequiredMixin, DeleteView):
     model = Organisation
     success_url = '/'
-    template_name = 'core/organisations/organisation_confirm_delete.html'
+    template_name = 'core/forms/confirm_delete.html'
 
 
 class GrantListView(ListView):
@@ -84,9 +82,8 @@ class GrantDetailView(DetailView):
 
 class GrantCreateView(LoginRequiredMixin, CreateView):
     model = Grant
-    fields = ['organisation', 'fund', 'project_title',
-              'amount', 'status', 'attachment', 'notes']
-    template_name = 'core/grants/grant_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
     def file_upload(request):
         save_path = os.path.join(settings.MEDIA_ROOT, 'uploads', request.FILES['file'])
@@ -96,9 +93,8 @@ class GrantCreateView(LoginRequiredMixin, CreateView):
 
 class GrantUpdateView(LoginRequiredMixin, UpdateView):
     model = Grant
-    fields = ['organisation', 'fund', 'project_title',
-              'amount', 'status', 'attachment', 'notes']
-    template_name = 'core/grants/grant_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
     def attachmentupload(request):
         if request.method == 'POST':
@@ -116,7 +112,7 @@ class GrantUpdateView(LoginRequiredMixin, UpdateView):
 class GrantDeleteView(LoginRequiredMixin, DeleteView):
     model = Grant
     success_url = '/'
-    template_name = 'core/grants/grant_confirm_delete.html'
+    template_name = 'core/forms/confirm_delete.html'
 
 
 class FundListView(ListView):
@@ -143,22 +139,20 @@ class FundDetailView(DetailView):
 
 class FundCreateView(LoginRequiredMixin, CreateView):
     model = Fund
-    fields = ['title', 'amount', 'open_date',
-              'close_date', 'type', 'notes']
-    template_name = 'core/funds/fund_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
 
 class FundUpdateView(LoginRequiredMixin, UpdateView):
     model = Fund
-    fields = ['title', 'amount', 'open_date',
-              'close_date', 'type', 'notes']
-    template_name = 'core/funds/fund_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
 
 class FundDeleteView(LoginRequiredMixin, DeleteView):
     model = Fund
     success_url = '/'
-    template_name = 'core/funds/fund_confirm_delete.html'
+    template_name = 'core/forms/confirm_delete.html'
 
 
 class ContactListView(ListView):
@@ -176,22 +170,20 @@ class ContactDetailView(DetailView):
 
 class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
-    fields = ['organisation', 'first_name', 'last_name',
-              'job_title', 'email', 'phone', 'notes']
-    template_name = 'core/contacts/contact_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
 
 class ContactUpdateView(LoginRequiredMixin, UpdateView):
     model = Contact
-    fields = ['organisation', 'first_name', 'last_name',
-              'job_title', 'email', 'phone', 'notes']
-    template_name = 'core/contacts/contact_form.html'
+    fields = '__all__'
+    template_name = 'core/forms/form.html'
 
 
 class ContactDeleteView(LoginRequiredMixin, DeleteView):
     model = Contact
     success_url = '/'
-    template_name = 'core/contacts/contact_confirm_delete.html'
+    template_name = 'core/forms/confirm_delete.html'
 
 
 class DashboardView(ListView):
