@@ -6,31 +6,52 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0003_grant_attachment'),
-    ]
+    dependencies = [("core", "0003_grant_attachment")]
 
     operations = [
         migrations.CreateModel(
-            name='Dashboard',
+            name="Dashboard",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('dash', models.CharField(max_length=50, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("dash", models.CharField(max_length=50, null=True)),
             ],
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='organisation',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='contactorgslist', to='core.Organisation'),
+            model_name="contact",
+            name="organisation",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="contactorgslist",
+                to="core.Organisation",
+            ),
         ),
         migrations.AlterField(
-            model_name='grant',
-            name='fund',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='grantfundslist', to='core.Fund'),
+            model_name="grant",
+            name="fund",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="grantfundslist",
+                to="core.Fund",
+            ),
         ),
         migrations.AlterField(
-            model_name='grant',
-            name='organisation',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='grantorgslist', to='core.Organisation'),
+            model_name="grant",
+            name="organisation",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="grantorgslist",
+                to="core.Organisation",
+            ),
         ),
     ]

@@ -6,24 +6,40 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('core', '0001_initial'),
-    ]
+    dependencies = [("core", "0001_initial")]
 
     operations = [
         migrations.AlterField(
-            model_name='contact',
-            name='organisation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='contactorgslist', to='core.Organisation'),
+            model_name="contact",
+            name="organisation",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="contactorgslist",
+                to="core.Organisation",
+            ),
         ),
         migrations.AlterField(
-            model_name='grant',
-            name='fund',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='grantfundslist', to='core.Fund'),
+            model_name="grant",
+            name="fund",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="grantfundslist",
+                to="core.Fund",
+            ),
         ),
         migrations.AlterField(
-            model_name='grant',
-            name='organisation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='grantorgslist', to='core.Organisation'),
+            model_name="grant",
+            name="organisation",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="grantorgslist",
+                to="core.Organisation",
+            ),
         ),
     ]
